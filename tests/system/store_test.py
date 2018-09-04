@@ -12,7 +12,7 @@ class StoreTest(BaseTest):
 
                 self.assertEqual(response.status_code, 201)
                 self.assertIsNotNone(StoreModel.find_by_name('test_store'))
-                self.assertDictEqual(json.loads(response.data), {'name': 'test_store', 'items': []})
+                self.assertDictEqual(json.loads(response.data), {'id': 1, 'name': 'test_store', 'items': []})
 
     def test_create_duplicate_store(self):
         with self.app() as client:
@@ -38,7 +38,7 @@ class StoreTest(BaseTest):
                 client.post('/store/test_store')
                 response = client.get('/store/test_store')
 
-                self.assertDictEqual(json.loads(response.data), {'name': 'test_store', 'items': []})
+                self.assertDictEqual(json.loads(response.data), {'id': 1, 'name': 'test_store', 'items': []})
                 self.assertEqual(response.status_code, 200)
 
     def test_store_not_found(self):
@@ -58,6 +58,7 @@ class StoreTest(BaseTest):
 
                 self.assertDictEqual(json.loads(response.data),
                                      {'name': 'test_store',
+                                      'id': 1,
                                       'items': [
                                           {'name': 'test_name',
                                            'price': 399.99
@@ -74,6 +75,7 @@ class StoreTest(BaseTest):
                 self.assertDictEqual(json.loads(response.data),
                                      {'stores': [
                                          {'name': 'test_store',
+                                          'id': 1,
                                           'items': []
                                           }
                                      ]})
@@ -90,6 +92,7 @@ class StoreTest(BaseTest):
                 self.assertDictEqual(json.loads(response.data),
                                      {'stores': [
                                          {'name': 'test_store',
+                                          'id': 1,
                                           'items': [
                                             {'name': 'test_name',
                                              'price': 399.99
