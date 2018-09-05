@@ -32,3 +32,12 @@ class UserTest(BaseTest):
                 self.assertEqual(response.status_code, 400)
                 self.assertDictEqual(json.loads(response.data),
                                      {'message': 'A user with such username already exists'})
+
+    def test_delete_existing_user(self):
+        with self.app() as client:
+            with self.app_context():
+                client.post('/register', data={'username': 'test', 'password': 'felix'})
+                response = client.delete('/userdelete', data={'username': 'test', 'password': 'felix'})
+                self.assertEqual(200, response.status_code)
+                self.assertDictEqual({'message': 'Successfully removed user'}, json.loads(response.data))
+

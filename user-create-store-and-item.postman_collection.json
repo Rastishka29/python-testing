@@ -11,6 +11,7 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "30f43c1d-0f5f-4c0d-8805-8af001df43d8",
 						"type": "text/javascript",
 						"exec": [
 							"postman.clearEnvironmentVariable(\"access_token\");",
@@ -78,6 +79,10 @@
 					{
 						"key": "Content-Type",
 						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "JWT"
 					}
 				],
 				"body": {
@@ -300,6 +305,50 @@
 					"path": [
 						"store",
 						"test_store"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/userdelete",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "72f80360-c99c-47da-b819-1a11d717c17c",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"Successfully removed user\");",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"user1\",\n\t\"password\": \"abcxyz\"\n}"
+				},
+				"url": {
+					"raw": "{{url}}/userdelete",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"userdelete"
 					]
 				}
 			},
